@@ -7,9 +7,7 @@
 #### Tecnologias Utilizadas:
 
 <img align="center" src="https://img.shields.io/badge/PHP-777BB4?flat&logo=php&logoColor=white" alt="PHP">
-<br>
 <img align="center" src="https://img.shields.io/badge/MySQL-005C84?style=flat&logo=mysql&logoColor=white" alt="MySQL">
-<br>
 <img align="center" src="https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=postman&logoColor=white" alt="MySQL">
 
 ---
