@@ -25,6 +25,9 @@ APIs a serem desenvolvidas
   - [x] Selecionar por clientes que alugaram o filme (GET)
   - [x] Alugar Filme Manualmente (POST)
   - [x] Devolver Filme (POST)
+  - [x] Consultar Categorias (GET)
+  - [x] Consultar Clientes por nome (GET)
+  - [x] Consultar Filmes por nome (GET)
 
 - Cliente
 
