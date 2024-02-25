@@ -103,6 +103,9 @@ INSERT INTO tb_InfoFilme (fk_filme, fk_genero) VALUES
 (9, 4),   -- Filme 9 (Ficção Científica)
 (10, 5);  -- Filme 10 (Romance)
 
+insert into tb_InfoFilme(fk_filme, fk_genero) values (6, 2);
+
+
 -- StoreProcedures para a parte administrativa
 
 DELIMITER //
@@ -126,6 +129,14 @@ CREATE PROCEDURE sp_cadastrar_filme(in nome varchar(50), in ano_lancamento int, 
 BEGIN
 	INSERT INTO tb_filmes(nm_filme, ano_lancamento, vl_filme, tipo_midia, dsc_filme, filme_poster) values(nome, ano_lancamento, vl_filme, tipo_midia, dsc_filme, filme_poster);
 END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_delete_filme(in idfilme int)
+BEGIN
+	DELETE FROM tb_filmes WHERE id_filme = idfilme;
+END ;
 //
 DELIMITER ;
 
@@ -177,6 +188,8 @@ BEGIN
 END ;
 //
 DELIMITER ;
+
+select * from tb_filme_alugado;
 
 call sp_consultar_filmes_alugados();
 
