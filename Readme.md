@@ -28,6 +28,9 @@ APIs a serem desenvolvidas
   - [x] Consultar Categorias (GET)
   - [x] Consultar Clientes por nome (GET)
   - [x] Consultar Filmes por nome (GET)
+  - [ ] Deletar Clientes (DELETE)
+  - [ ] Deletar Filmes (DELETE)
+  - [ ] Alterar Filmes (PUT)
 
 - Cliente
 
