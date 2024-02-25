@@ -7,13 +7,13 @@
         $data = json_decode(file_get_contents("php://input", true));
         if($data){
             $filme_obj = $data->filme_obj;
-            $filme_poster = createImage();
-            $categorias = $data->categorias_array;
+            $filme_poster = createImage($data->filme_poster_url, $data->filme_poster_name);
+            $categorias = $data->filme_obj->categorias;
 
             try{
                 $sql = "CALL sp_cadastrar_filme(:nome, :ano_lancamento, :vl_filme, :tipo_midia, :dsc, :filme_poster)";
                 $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(":nome", $filme_obj->nome);
+                $stmt->bindParam(":nome", $filme_obj->nm_filme);
                 $stmt->bindParam(":ano_lancamento", $filme_obj->ano_lancamento);
                 $stmt->bindParam(":vl_filme", $filme_obj->vl_filme);
                 $stmt->bindParam(":tipo_midia", $filme_obj->tipo_midia);
@@ -48,7 +48,17 @@
     }
 
 
-    function createImage(){
-        return "Imagem";
+    function createImage($file_url, $file_name){
+
+        $pasta = "../../arquivos/";
+        $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $file_url));
+        $separarNomeExtensao = explode(".", $file_name);
+        $extensao = $separarNomeExtensao[1];
+
+        $newName = uniqid();
+        $newFile = $newName . "." . $extensao;
+        $path = $pasta . $newFile; 
+        file_put_contents($path, $data);
+        return "arquivos/$newFile";
     }
 ?>
