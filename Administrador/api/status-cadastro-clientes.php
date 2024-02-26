@@ -3,7 +3,7 @@
     require("../config.php");
     require("../headers.php");
 
-    if($_SERVER['REQUEST_METHOD'] == "PUT"){
+    if($_SERVER['REQUEST_METHOD'] == "PATCH"){
         $data = json_decode(file_get_contents("php://input", true));
         if($data){
             $id_cli = $data->id_cliente;
@@ -19,7 +19,7 @@
                 echo json_encode(["message"=>"Usuário ".$status]);
             }
             catch(PDOException $e){
-
+                echo json_encode(["message" => $e->getMessage()]);
             }
         }
     }
