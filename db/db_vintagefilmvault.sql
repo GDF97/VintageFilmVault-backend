@@ -53,6 +53,7 @@ CREATE TABLE tb_InfoFilme (
 
 CREATE TABLE tb_filme_alugado (
     id_filme_alugado INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    tipo_midia enum("Digital", "Física", "Ambos"),
     fk_filme INT,
     fk_cliente INT,
     FOREIGN KEY (fk_filme)
@@ -189,9 +190,7 @@ END ;
 //
 DELIMITER ;
 
-select * from tb_filme_alugado;
-
-call sp_consultar_filmes_alugados();
+-- call sp_consultar_filmes_alugados();
 
 DELIMITER //
 CREATE PROCEDURE sp_resgatar_generos()
@@ -209,7 +208,9 @@ BEGIN
 FROM
     tb_cliente
 WHERE
-    nm_cliente like CONCAT('%', nome, '%');
+    nm_cliente like CONCAT('%', nome, '%')
+AND
+	status_cadastro = "Aprovado";
 END;
 //
 DELIMITER ;
@@ -218,7 +219,7 @@ DELIMITER //
 CREATE PROCEDURE sp_consultar_filme_pelo_nome(in nome varchar(50))
 BEGIN
 	SELECT 
-    id_filme, nm_filme
+    id_filme, nm_filme, vl_filme, tipo_midia
 FROM
     tb_filmes
 WHERE
@@ -236,12 +237,16 @@ end ;
 DELIMITER ; 
 
 DELIMITER //
-CREATE PROCEDURE sp_alugar_filme(in cliente int, in filme int)
+CREATE PROCEDURE sp_alugar_filme(in cliente int, in filme int, in tipo_midia enum("Digital", "Física", "Ambos"))
 begin
-	insert into tb_filme_alugado(fk_filme, fk_cliente) values (filme, cliente);
+	insert into tb_filme_alugado(tipo_midia, fk_filme, fk_cliente) values (tipo_midia, filme, cliente);
 end ;
 //
 DELIMITER ;
+
+drop procedure sp_alugar_filme;
+
+
 
 DELIMITER //
 CREATE PROCEDURE sp_devolver_filme(in filme_alugado int)
@@ -285,7 +290,6 @@ BEGIN
 END;
 //
 DELIMITER ;
-
 
 DELIMITER //
 CREATE PROCEDURE sp_consultar_filme_alugado_por_cliente(in id_cli int)
