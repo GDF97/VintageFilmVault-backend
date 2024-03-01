@@ -246,6 +246,13 @@ DELIMITER ;
 
 drop procedure sp_alugar_filme;
 
+DELIMITER //
+CREATE PROCEDURE sp_atualizar_filme(in idfilme int, in nome_filme varchar(50), in ano_lancamento int, in vl_filme float(10,2), in tipo_midia enum("Digital", "Física", "Ambos"), in desc_filme varchar(400))
+BEGIN
+	UPDATE tb_filmes SET nm_filme = nome_filme, ano_lancamento = ano_lancamento, vl_filme = vl_filme, tipo_midia = tipo_midia, dsc_filme = desc_filme WHERE id_filme = idfilme;
+END ;
+//
+DELIMITER ;
 
 
 DELIMITER //
