@@ -7,9 +7,10 @@
         $id_filme = $_GET["id_filme"];
         if($id_filme){
             try {
-                $sql = "CALL sp_consultar_filme_por_id(:id_filme)";
+                $sql = "CALL sp_consultar_filme_por_id(:idfilme)";
                 $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(":id_filme", $id_filme);
+                $stmt->bindParam(":idfilme", $id_filme);
+                $stmt->execute();
                 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 if($results){
                     echo json_encode($results);

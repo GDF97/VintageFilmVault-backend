@@ -150,12 +150,16 @@ end;
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE sp_consultar_filme_por_id(in filmeID int)
+CREATE PROCEDURE sp_consultar_filme_por_id(in idfilme int)
 begin 
-	SELECT id_filme, nm_filme, vl_filme, tipo_midia FROM tb_filmes where id_filme = filmeID;
+	SELECT id_filme, nm_filme, ano_lancamento, vl_filme, tipo_midia, dsc_filme FROM tb_filmes where id_filme = idfilme;
 end ;
 //
 DELIMITER ;
+
+drop procedure sp_consultar_filme_por_id;
+call sp_consultar_filme_por_id(5);
+use db_vintagefilmvault;
 
 DELIMITER //
 CREATE PROCEDURE sp_consultar_clientes()
