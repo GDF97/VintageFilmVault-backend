@@ -36,7 +36,7 @@ APIs a serem desenvolvidas
 
   - [ ] Realizar Login (POST)
   - [ ] Realizar Cadastro (POST)
-  - [ ] Visualizar todos os filmes (GET)
-  - [ ] Filtrar filmes por categoria (GET)
-  - [ ] Buscar apenas um filme (GET)
+  - [x] Visualizar todos os filmes (GET)
+  - [x] Filtrar filmes por categoria (GET)
+  - [x] Buscar apenas um filme (GET)
   - [ ] Alugar filmes (POST)

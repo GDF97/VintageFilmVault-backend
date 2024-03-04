@@ -219,6 +219,8 @@ END;
 //
 DELIMITER ;
 
+CALL sp_resgatar_generos();
+
 DELIMITER //
 CREATE PROCEDURE sp_consultar_filme_pelo_nome(in nome varchar(50))
 BEGIN
@@ -258,6 +260,12 @@ END ;
 //
 DELIMITER ;
 
+call sp_atualizar_filme(1, "teste", 1920, 14.50, "Física", "descrição");
+
+call sp_consultar_filme_por_id(1);
+
+use db_vintagefilmvault;
+
 
 DELIMITER //
 CREATE PROCEDURE sp_devolver_filme(in filme_alugado int)
@@ -289,10 +297,13 @@ DELIMITER //
 CREATE PROCEDURE sp_selecionar_filmes_por_genero(in genero varchar(50))
 -- F = tb_filmes,  G = tb_generos, IF = tb_InfoFilme
 BEGIN
-	Select F.id_filme, F.nm_filme, F.ano_lancamento, F.vl_filme, G.nm_genero from tb_filmes F join tb_InfoFilme InF on InF.fk_filme = F.id_filme join tb_generos G on InF.fk_genero = G.id_genero where G.nm_genero = genero;
+	Select F.id_filme, F.nm_filme, F.ano_lancamento, F.vl_filme, F.filme_poster from tb_filmes F join tb_InfoFilme InF on InF.fk_filme = F.id_filme join tb_generos G on InF.fk_genero = G.id_genero where G.nm_genero = genero;
 END ;
 //
 DELIMITER ;
+
+drop procedure sp_selecionar_filmes_por_genero;
+call sp_selecionar_filmes_por_genero("Ação");
 
 DELIMITER //
 CREATE PROCEDURE sp_cadastrar_cliente(in codigo int, in nome varchar(50), in email varchar(50),in senha varchar(15),in endereco varchar(100))
@@ -305,8 +316,33 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_consultar_filme_alugado_por_cliente(in id_cli int)
 BEGIN
-	SELECT AL.id_filmealugado, F.nm_nome, F.vl_filme, F.tipo_midia from tb_filmes F join tb_filme_alugado AL on AL.fk_filme = F.id_filme where AL.fk_cliente = id_cliente;
+	SELECT AL.id_filme_alugado, F.nm_filme, F.vl_filme, F.tipo_midia from tb_filmes F join tb_filme_alugado AL on AL.fk_filme = F.id_filme where AL.fk_cliente = id_cli;
 END; 
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_consultar_filmes_to_display()
+BEGIN
+	SELECT * FROM tb_filmes;
+END;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_consultar_filme_cliente()
+BEGIN
+	-- F = tb_filmes,  G = tb_generos, IF = tb_InfoFilme
+	SELECT F.id_filme, F.nm_filme, F.vl_filme, f.ano_lancamento, F.filme_poster FROM tb_filmes F;
+END ;
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_consultar_filme_por_id_cliente(in idfilme int)
+begin 
+	SELECT id_filme, nm_filme, ano_lancamento vl_filme, tipo_midia, dsc_filme, filme_poster FROM tb_filmes where id_filme = idfilme;
+end ;
 //
 DELIMITER ;
 

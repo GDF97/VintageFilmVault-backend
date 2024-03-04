@@ -59,6 +59,6 @@
         $newFile = $newName . "." . $extensao;
         $path = $pasta . $newFile; 
         file_put_contents($path, $data);
-        return "arquivos/$newFile";
+        return "$newFile";
     }
 ?>
