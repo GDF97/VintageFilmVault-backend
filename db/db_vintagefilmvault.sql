@@ -1,4 +1,3 @@
-
 create database db_VintageFilmVault;
 
 -- drop database db_VintageFilmVault;
@@ -7,7 +6,6 @@ use db_vintagefilmvault;
 
 CREATE TABLE tb_cliente (
     id_cliente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    cd_cliente INT UNIQUE NOT NULL,
     nm_cliente VARCHAR(50) NOT NULL,
     nm_email VARCHAR(50) UNIQUE NOT NULL,
     cd_senha VARCHAR(15) NOT NULL,
@@ -64,8 +62,6 @@ CREATE TABLE tb_filme_alugado (
 
 
 -- Inserts de Exemplo
-
-
 
 INSERT INTO tb_filmes (nm_filme, ano_lancamento, vl_filme, tipo_midia, dsc_filme, filme_poster) VALUES
 ('Filme 1', 2020, 19.99, 'Digital', 'Descrição do Filme 1', 'poster1.jpg'),
@@ -157,10 +153,6 @@ end ;
 //
 DELIMITER ;
 
-drop procedure sp_consultar_filme_por_id;
-call sp_consultar_filme_por_id(5);
-use db_vintagefilmvault;
-
 DELIMITER //
 CREATE PROCEDURE sp_consultar_clientes()
 BEGIN
@@ -250,8 +242,6 @@ end ;
 //
 DELIMITER ;
 
-drop procedure sp_alugar_filme;
-
 DELIMITER //
 CREATE PROCEDURE sp_atualizar_filme(in idfilme int, in nome_filme varchar(50), in ano_lancamento int, in vl_filme float(10,2), in tipo_midia enum("Digital", "Física", "Ambos"), in desc_filme varchar(400))
 BEGIN
@@ -259,12 +249,6 @@ BEGIN
 END ;
 //
 DELIMITER ;
-
-call sp_atualizar_filme(1, "teste", 1920, 14.50, "Física", "descrição");
-
-call sp_consultar_filme_por_id(1);
-
-use db_vintagefilmvault;
 
 
 DELIMITER //
@@ -302,16 +286,43 @@ END ;
 //
 DELIMITER ;
 
-drop procedure sp_selecionar_filmes_por_genero;
-call sp_selecionar_filmes_por_genero("Ação");
-
 DELIMITER //
-CREATE PROCEDURE sp_cadastrar_cliente(in codigo int, in nome varchar(50), in email varchar(50),in senha varchar(15),in endereco varchar(100))
+CREATE PROCEDURE sp_cadastrar_cliente(in nome varchar(50), in email varchar(50),in senha varchar(15),in endereco varchar(100))
 BEGIN
-	INSERT INTO tb_cliente(cd_cliente, nm_cliente, nm_email, cd_senha, nm_endereco) values(codigo, nome, email, senha, endereco);
+	INSERT INTO tb_cliente(nm_cliente, nm_email, cd_senha, nm_endereco) values(nome, email, senha, endereco);
 END;
 //
 DELIMITER ;
+
+-- Exemplo 1
+CALL sp_cadastrar_cliente('João Silva', 'joao@email.com', 'senha123', 'Rua A, 123');
+
+-- Exemplo 2
+CALL sp_cadastrar_cliente('Maria Oliveira', 'maria@email.com', 'senha456', 'Avenida B, 456');
+
+-- Exemplo 3
+CALL sp_cadastrar_cliente('Pedro Santos', 'pedro@email.com', 'senha789', 'Travessa C, 789');
+
+-- Exemplo 4
+CALL sp_cadastrar_cliente('Ana Souza', 'ana@email.com', 'senhaabc', 'Alameda D, 987');
+
+-- Exemplo 5
+CALL sp_cadastrar_cliente('Lucas Pereira', 'lucas@email.com', 'senhadef', 'Rua E, 543');
+
+-- Exemplo 6
+CALL sp_cadastrar_cliente('Juliana Lima', 'juliana@email.com', 'senha456', 'Avenida F, 234');
+
+-- Exemplo 7
+CALL sp_cadastrar_cliente('Ricardo Oliveira', 'ricardo@email.com', 'senhaghi', 'Rua G, 876');
+
+-- Exemplo 8
+CALL sp_cadastrar_cliente('Aline Costa', 'aline@email.com', 'senha789', 'Travessa H, 123');
+
+-- Exemplo 9
+CALL sp_cadastrar_cliente('Fernando Santos', 'fernando@email.com', 'senhaabc', 'Alameda I, 567');
+
+-- Exemplo 10
+CALL sp_cadastrar_cliente('Camila Lima', 'camila@email.com', 'senhajkl', 'Avenida J, 890');
 
 DELIMITER //
 CREATE PROCEDURE sp_consultar_filme_alugado_por_cliente(in id_cli int)
@@ -341,7 +352,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE sp_consultar_filme_por_id_cliente(in idfilme int)
 begin 
-	SELECT id_filme, nm_filme, ano_lancamento vl_filme, tipo_midia, dsc_filme, filme_poster FROM tb_filmes where id_filme = idfilme;
+	SELECT id_filme, nm_filme, ano_lancamento, vl_filme, tipo_midia, dsc_filme, filme_poster FROM tb_filmes where id_filme = idfilme;
 end ;
 //
 DELIMITER ;
