@@ -6,10 +6,10 @@
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $data = json_decode(file_get_contents("php://input", true));
         if($data){
-            $nome = $data->formObj->nome;
-            $email = $data->formObj->email;
-            $senha = $data->formObj->senha;
-            $endereco = $data->formObj->endereco;
+            $nome = $data->clientInfos->nm_cliente;
+            $email = $data->clientInfos->nm_email;
+            $senha = $data->clientInfos->cd_senha;
+            $endereco = $data->clientInfos->nm_endereco;
             try {
                 $sql = "select * from tb_cliente where nm_email = :email";
                 $stmt = $pdo->prepare($sql);

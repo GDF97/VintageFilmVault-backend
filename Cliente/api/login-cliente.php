@@ -42,7 +42,9 @@
                             echo json_encode(["status" => "error", "message" => "Esse cliente não existe"]);
                             break;
                     }
-                }
+                } else{
+			echo json_encode(["status" => "error", "message" => "Esse cliente não existe"]);
+		}
                 
 
             } catch (PDOException $th) {
